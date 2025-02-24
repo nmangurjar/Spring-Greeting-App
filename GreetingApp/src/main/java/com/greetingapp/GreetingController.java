@@ -31,19 +31,22 @@ public class GreetingController {
         return "Greeting deleted successfully.";
     }
 
-    //UC2
     private final GreetingService greetingService;
 
     public GreetingController(GreetingService greetingService) {
         this.greetingService = greetingService;
     }
 
-    //UC3
     @GetMapping
     public String getGreeting(
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName) {
         return greetingService.getPersonalizedGreeting(firstName, lastName);
+    }
+
+    @GetMapping("/{id}")
+    public String getGreetingById(@PathVariable Long id) {
+        return greetingService.getGreetingById(id);
     }
 
 }
