@@ -1,29 +1,65 @@
 package com.greetingapp;
 
-
+import com.greetingapp.model.Greeting;
+import com.greetingapp.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 @RestController
+@RequestMapping("uc1/greeting")
 public class GreetingController {
 
-    @GetMapping("/greet")
-    public String getMapping() {
-        return "{\"message\": \"Hello, this is a GET request\"}";
+    // GET request - Returns a simple greeting message
+    @GetMapping
+    public String getGreeting() {
+        return "Hello, Welcome!";
     }
 
-    @PostMapping("/greet")
-    public String postMapping() {
-        return "{\"message\": \"Hello, this is a POST request\"}";
+    // POST request - Takes a name and returns a personalized greeting
+    @PostMapping
+    public String postGreeting(@RequestBody String name) {
+        return "Hello, " + name + "! Nice to meet you.";
     }
 
-    @PutMapping("/greet")
-    public String putGreeting() {
-        return "{\"message\": \"Hello, this is a PUT request\"}";
+    // PUT request - Updates a greeting message
+    @PutMapping
+    public String putGreeting(@RequestBody String newMessage) {
+        return "Updated greeting: " + newMessage;
     }
 
-    @DeleteMapping("/greet")
+    // DELETE request - Deletes a greeting
+    @DeleteMapping
     public String deleteGreeting() {
-        return "{\"message\": \"Hello, this is a DELETE request\"}";
+        return "Greeting deleted successfully.";
+    }
+
+
+    private final GreetingService greetingService;
+
+    public GreetingController(GreetingService greetingService) {
+        this.greetingService = greetingService;
+    }
+
+
+    @GetMapping
+    public String getGreeting(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName) {
+        return greetingService.getPersonalizedGreeting(firstName, lastName);
+    }
+
+    @GetMapping("/{id}")
+    public String getGreetingById(@PathVariable Long id) {
+        return greetingService.getGreetingById(id);
+    }
+
+    @GetMapping("/all")
+    public List<Greeting> getAllGreetings() {
+        return greetingService.getAllGreetings();
+    }
+
+    @PutMapping("/{id}")
+    public Greeting updateGreeting(@PathVariable Long id, @RequestBody String newMessage) {
+        return greetingService.updateGreeting(id, newMessage);
     }
 }
-
