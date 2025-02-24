@@ -1,6 +1,7 @@
 package com.greetingapp;
 
 
+import com.greetingapp.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,6 +25,13 @@ public class GreetingController {
     @DeleteMapping("/greet")
     public String deleteGreeting() {
         return "{\"message\": \"Hello, this is a DELETE request\"}";
+    }
+
+    //UC2
+    private final GreetingService greetingService;
+
+    public GreetingController(GreetingService greetingService) {
+        this.greetingService = greetingService;
     }
 }
 
