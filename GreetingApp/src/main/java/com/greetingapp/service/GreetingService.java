@@ -1,5 +1,7 @@
 package com.greetingapp.service;
 
+
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,4 +22,17 @@ public class GreetingService {
     public String deleteGreeting() {
         return "Greeting deleted successfully.";
     }
+
+    public String getPersonalizedGreeting(String firstName, String lastName) {
+        if (firstName != null && !firstName.isEmpty() && lastName != null && !lastName.isEmpty()) {
+            return "Hello, " + firstName + " " + lastName + "! Nice to meet you.";
+        } else if (firstName != null && !firstName.isEmpty()) {
+            return "Hello, " + firstName + "!";
+        } else if (lastName != null && !lastName.isEmpty()) {
+            return "Hello, " + lastName + "!";
+        } else {
+            return getGreeting();
+        }
+    }
 }
+
