@@ -5,7 +5,6 @@ import com.greetingapp.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("uc1/greeting")
 public class GreetingController {
@@ -55,5 +54,10 @@ public class GreetingController {
     @GetMapping("/all")
     public List<Greeting> getAllGreetings() {
         return greetingService.getAllGreetings();
+    }
+
+    @PutMapping("/{id}")
+    public Greeting updateGreeting(@PathVariable Long id, @RequestBody String newMessage) {
+        return greetingService.updateGreeting(id, newMessage);
     }
 }
